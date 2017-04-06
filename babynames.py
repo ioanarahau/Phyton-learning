@@ -42,10 +42,11 @@ def extract_names(filename):
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
   # +++your code here+++
-  names_dict = []
+  names_list = []
   names = []
   f = open(filename, 'r')
-  year = re.search(r'Popularity\sin\s(\d\d\d\d)', f.read())
+  text = f.read()
+  year = re.search(r'Popularity\sin\s(\d\d\d\d)', text)
   if not year:
     # We didn't find a year, so we'll exit with an error message.
     sys.stderr.write('Couldn\'t find the year!\n')
@@ -53,18 +54,16 @@ def extract_names(filename):
   year = year.group(1)
   names.append(year)
   print year
-  f.close()
-  f = open(filename, 'r')
-  strings = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)', f.read())
-  for tuple in strings:
-    boy_names = (tuple[1], tuple [0])
-    girl_names = (tuple[2], tuple [0])
-    names_dict.append(boy_names)
-    names_dict.append(girl_names)
-  sorted_names = sorted(names_dict)
-  for tuple in sorted_names:
-    name = tuple[0]
-    rank = tuple[1]
+  strings = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)', text)
+  for string in strings:
+    boy_names = (string[1], string [0])
+    girl_names = (string[2], string [0])
+    names_list.append(boy_names)
+    names_list.append(girl_names)
+  sorted_names = sorted(names_list)
+  for value in sorted_names:
+    name = value[0]
+    rank = value[1]
     result = name + ' ' + rank
     print result
     names.append(result)
